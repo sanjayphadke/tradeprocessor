@@ -16,5 +16,16 @@ Key Validations performed on the incoming Trade:
 2.	The store must reject any trade that has a maturity date earlier than today's date.
 3.	When a trade's maturity date is surpassed, the store should automatically mark the trade as expired.
 
+Sample Trade Structure:
+{
+    "tradeId": "T1",
+    "version": 1,
+    "counterPartyId": "CP-1",
+    "bookId": "B1",
+    "maturityDate": "2025-05-20",
+    "createdDate": "2025-03-15",
+    "expired": false
+}
 
-Reference Plant UML Sequence diagram located under tradeconsumer module. trdeconsumer--->src-->TradeConsumer.puml
+
+Reference Plant UML Sequence diagram located under tradeconsumer module. tradeconsumer--->src-->TradeConsumer.puml
