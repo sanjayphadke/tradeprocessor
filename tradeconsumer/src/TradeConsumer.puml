@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+Entity-> TradeProducerController:createTrade(@RequestBody Trade trade)[POST-http:api.urlhost.com/api/trades]
+TradeProducerController->TradeProducerService: sendTrade(Trade:trade)
+TradeProducerService-> KafkaTopic: Msg(Trade:tradetopic)
+KafkaTopic ->TradeConsumerService: Msg(Trade:tradetopic)
+TradeConsumerService --> TradeStoreService: validate Trade
+TradeStoreService--> DB: storeTrade(Trade)
+TradeStoreService--> CronScheduler: expiredTrades
+CronScheduler->DB:updateExpiredTrades():Daily Schedule
+@enduml
