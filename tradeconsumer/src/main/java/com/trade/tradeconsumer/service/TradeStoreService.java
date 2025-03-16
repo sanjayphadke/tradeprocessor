@@ -26,6 +26,7 @@ public class TradeStoreService {
     private TradeRepository tradeRepository;
 
     public void processTrade(Trade trade) {
+        log.info("###Processing trade: {}", trade);
         validateTrade(trade);
         saveTrade(trade);
     }
@@ -56,6 +57,7 @@ public class TradeStoreService {
     }
 
     private void saveTrade(Trade trade) {
+        log.info("Saving trade: {}", trade);
         TradeEntity tradeEntity = convertToEntity(trade);
 
         tradeRepository.save(tradeEntity);
