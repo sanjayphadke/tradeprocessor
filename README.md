@@ -4,6 +4,15 @@ There are two modules:
 1) tradeproducer- This houses the functionality for producing Trade and publish on Kafka Topic. (tradetopic) .Kafka broker hosted locally on Docker desktop.[Ref: https://developer.confluent.io/confluent-tutorials/kafka-on-docker/]
 2) tradeconsumer - This module houses the functionailty for consuming Trade messge  from Kafka Topic and storing Trade in a Trade Store. In memory SQL DB  H2DB which ships with Springboot. Alternatively you can use any other SQl/No Sql (MongoDB)
 
+Architecture and Workflow
+
+![TradeConsumer](https://github.com/user-attachments/assets/0aa49943-6071-4966-91be-8d09a3d2283a)
+
+
+
+
+
+
 Key Application Components:
 1) TradeProducerController-REST Controller for publishing Trade message through TradeControlelrService on Kafka Topic-trade Topic
 2) TradeProducerService - Service for publishing Trade message on Kafka
