@@ -10,3 +10,4 @@ TradeConsumerService --> TradeStoreService: validate Trade
 TradeStoreService--> DB: storeTrade(Trade)
 TradeStoreService--> CronScheduler: expiredTrades
 CronScheduler->DB:updateExpiredTrades():Daily Schedule
+@enduml
