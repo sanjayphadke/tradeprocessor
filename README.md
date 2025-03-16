@@ -11,5 +11,10 @@ Key Application Components:
 3) TradeConsumerService- Subscribes to Kafka Topic and consumes message.
 4) TradeStoreService - Service for performaing necessary validations on incoming Tade message and store in H2 DB. This also has a sceduler (Cron Job) set to run at midnight daily to scan all Trades in the DB and mark the Trades as Expired for those whose Maturity Date is less than current date.
 
+Key Validations performed on the incoming Trade:
+1.	If a trade with a lower version is received during transmission, the store will reject it and generate an exception. Trades with the same version will replace the current record.
+2.	The store must reject any trade that has a maturity date earlier than today's date.
+3.	When a trade's maturity date is surpassed, the store should automatically mark the trade as expired.
+
 
 Reference Plant UML Sequence diagram located under tradeconsumer module. trdeconsumer--->src-->TradeConsumer.puml
