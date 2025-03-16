@@ -18,7 +18,7 @@ Key Application Components:
 2) TradeProducerService - Service for publishing Trade message on Kafka
 
 3) TradeConsumerService- Subscribes to Kafka Topic and consumes message.
-4) TradeStoreService - Service for performaing necessary validations on incoming Tade message and store in H2 DB. This also has a sceduler (Cron Job) set to run at midnight daily to scan all Trades in the DB and mark the Trades as Expired for those whose Maturity Date is less than current date.
+4) TradeStoreService - Service for performing necessary validations on incoming Tade message and store in H2 DB. This also has a scheduler (Cron Job) set to run at midnight daily to scan all Trades in the DB and mark the Trades as Expired for those whose Maturity Date is less than current date.
 
 Key Validations performed on the incoming Trade:
 1.	If a trade with a lower version is received during transmission, the store will reject it and generate an exception. Trades with the same version will replace the current record.
