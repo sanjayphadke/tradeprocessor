@@ -2,11 +2,11 @@ name: Build and Push Trade Producer Docker Image
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'tradeproducer/**'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
