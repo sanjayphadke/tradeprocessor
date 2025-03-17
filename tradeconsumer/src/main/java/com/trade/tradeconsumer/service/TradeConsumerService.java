@@ -16,7 +16,7 @@ public class TradeConsumerService {
     private TradeStoreService tradeStoreService;
 
 /*
-    @KafkaListener(topics = "tradetopic", groupId = "trade-store-consumergroup")
+    @KafkaListener(topics = "tradetopic", groupId = "tradestore-consumergroup")
     public void listen(String message) {
         log.info("Trade Consumer Received message#######: {}", message);
         // Add your processing logic here
@@ -30,7 +30,7 @@ public class TradeConsumerService {
     }
 */
 
-    @KafkaListener(topics = "tradetopic", groupId = "trade-store-group")
+    @KafkaListener(topics = "tradetopic", groupId = "tradestore-consumergroup")
     public void consume(Trade trade) {
         log.info("#### Received trade for Consumption####: {}", trade);
         try {
