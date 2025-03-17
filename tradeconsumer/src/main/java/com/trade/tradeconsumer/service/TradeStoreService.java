@@ -81,9 +81,11 @@ public class TradeStoreService {
 
     @Scheduled(cron = "0 0 0 * * ?") // Run daily at midnight
     public void updateExpiredTrades() {
-        List<TradeEntity> trades = tradeRepository.findAll();
-        LocalDate today = LocalDate.now();
 
+        LocalDate today = LocalDate.now();
+        log.info("### Scheduler Updating expired trades"+ today);
+
+        List<TradeEntity> trades = tradeRepository.findAll();
         trades.stream()
                 .filter(trade -> !trade.isExpired() &&
                         trade.getMaturityDate().isBefore(today))
@@ -91,5 +93,6 @@ public class TradeStoreService {
                     trade.setExpired(true);
                     tradeRepository.save(trade);
                 });
+
     }
 }
