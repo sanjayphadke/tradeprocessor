@@ -19,7 +19,7 @@ public class TradeProducerService {
 
     public void sendTrade(Trade trade) {
         trade.setCreatedDate(LocalDate.now());
-        log.info("Sending trade: {}", trade);
+        log.info("###Sending trade: {}", trade);
         kafkaTemplate.send(TOPIC, trade.getTradeId(), trade);
     }
 }
