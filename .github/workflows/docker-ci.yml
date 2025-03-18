@@ -23,15 +23,17 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-
+    
     # Snyk scan for code dependencies
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/maven@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --severity-threshold=high
+        args: --severity-threshold=high --file=tradeproducer/pom.xml
         command: monitor
+    
+
 
     # Build the application
     - name: Build with Maven
