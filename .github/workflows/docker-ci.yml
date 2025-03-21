@@ -36,7 +36,7 @@ jobs:
 
 
       - name: Build Docker Image
-        run: docker build -t tradeproducer:latest .
+        run: docker build -t tradeproducer:latest ./tradeproducer
 
       - name: Push Docker Image
         run: docker push tradeproducer:latest
