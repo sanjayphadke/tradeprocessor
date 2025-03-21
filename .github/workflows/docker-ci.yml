@@ -25,11 +25,11 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      - name: Authenticate Snyk CLI
-        run: snyk config set api=${{ secrets.SNYK_TOKEN }}
-
      # - name: Authenticate Snyk CLI
-      #  run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      #  run: snyk config set api=${{ secrets.SNYK_TOKEN }}
+
+      - name: Authenticate Snyk CLI
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk to check for vulnerabilities
         run: snyk test --severity-threshold=high --file=tradeproducer/pom.xml -d
@@ -41,7 +41,9 @@ jobs:
         working-directory: ./tradeproducer
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password "${{ secrets.DOCKERHUB_PASSWORD }}"
+
+       # run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
         run: docker build -t tradeproducer:latest ./tradeproducer
