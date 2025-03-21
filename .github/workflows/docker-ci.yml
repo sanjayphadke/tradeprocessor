@@ -26,7 +26,6 @@ jobs:
         run: npm install -g snyk
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
         run: snyk test --severity-threshold=high --file=tradeproducer/pom.xml -d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
