@@ -79,7 +79,7 @@ public class TradeStoreService {
     }
 
 
-    @Scheduled(cron = "0 0 0 * * ?") // Run daily at midnight
+    @Scheduled(cron = "0 0 0 * * ?") // Run daily at midnight // for otjer tme example 20:00 hrs- 0 0 20 * *
     public void updateExpiredTrades() {
 
         LocalDate today = LocalDate.now();
