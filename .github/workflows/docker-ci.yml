@@ -59,13 +59,11 @@ jobs:
         run: docker build -t tradeconsumer:latest ./tradeconsumer
 
       - name: Push tradeproducer Docker Image
-        run: docker push tradeproducer:latest
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker tag tradeproducer:latest ${{ secrets.DOCKERHUB_USERNAME }}/tradeproducer:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/tradeproducer:latest
 
       - name: Push tradeconsumer Docker Image
-        run: docker push tradeconsumer:latest
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker tag tradeconsumer:latest ${{ secrets.DOCKERHUB_USERNAME }}/tradeconsumer:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/tradeconsumer:latest
