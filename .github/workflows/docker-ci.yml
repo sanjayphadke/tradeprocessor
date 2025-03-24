@@ -1,4 +1,4 @@
-name: Build and Push Trade Producer Docker Image
+name: Build and Push Docker Images for Tradeproducer and Tradeconsumer modules
 
 on:
   push:
@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set execute permissions for mvnw
-        run: chmod +x ./tradeproducer/mvnw
-        
+        run: chmod +x ./tradeproducer/mvnw ./tradeconsumer/mvnw
+
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
@@ -25,20 +25,26 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-     # - name: Authenticate Snyk CLI
-      #  run: snyk config set api=${{ secrets.SNYK_TOKEN }}
-
       - name: Authenticate Snyk CLI
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-      - name: Run Snyk to check for vulnerabilities
+      - name: Run Snyk to check for vulnerabilities in tradeproducer
         run: snyk test --severity-threshold=high --file=tradeproducer/pom.xml -d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Build with Maven
+      - name: Run Snyk to check for vulnerabilities in tradeconsumer
+        run: snyk test --severity-threshold=high --file=tradeconsumer/pom.xml -d
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Build tradeproducer with Maven
         run: mvn clean install
         working-directory: ./tradeproducer
+
+      - name: Build tradeconsumer with Maven
+        run: mvn clean install
+        working-directory: ./tradeconsumer
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -46,17 +52,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-
-      #- name: Log in to Docker Hub
-       # run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password "${{ secrets.DOCKERHUB_PASSWORD }}"
-
-       # run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-
-      - name: Build Docker Image
+      - name: Build tradeproducer Docker Image
         run: docker build -t tradeproducer:latest ./tradeproducer
 
-      - name: Push Docker Image
+      - name: Build tradeconsumer Docker Image
+        run: docker build -t tradeconsumer:latest ./tradeconsumer
+
+      - name: Push tradeproducer Docker Image
         run: docker push tradeproducer:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push tradeconsumer Docker Image
+        run: docker push tradeconsumer:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
